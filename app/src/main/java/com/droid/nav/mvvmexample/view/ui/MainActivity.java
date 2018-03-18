@@ -1,13 +1,24 @@
 package com.droid.nav.mvvmexample.view.ui;
 
+import android.arch.lifecycle.LifecycleOwner;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.droid.nav.mvvmexample.R;
 import com.droid.nav.mvvmexample.service.model.Project;
 
-public class MainActivity extends AppCompatActivity {
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+
+public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector,LifecycleOwner {
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,7 +34,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /** Shows the project detail fragment */
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
+    }
+
+}
+
+
+/**
+ * Shows the project detail fragment
+ */
 //    public void show(Project project) {
 //        ProjectFragment projectFragment = ProjectFragment.forProject(project.name);
 //
@@ -33,4 +54,4 @@ public class MainActivity extends AppCompatActivity {
 //                .replace(R.id.fragment_container,
 //                        projectFragment, null).commit();
 //    }
-}
+//}

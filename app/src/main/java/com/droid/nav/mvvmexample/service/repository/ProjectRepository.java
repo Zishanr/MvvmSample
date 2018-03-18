@@ -7,6 +7,9 @@ import com.droid.nav.mvvmexample.service.model.Project;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,18 +20,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Copyright © 2017 Appster LLP. All rights reserved.
  * Created by navdeepbedi on 17/03/18.
  */
-
+@Singleton
 public class ProjectRepository {
 
     private GithubService githubService;
 
-    public ProjectRepository() {
+    @Inject
+    public ProjectRepository(GithubService gitHubService) {
 
-        githubService = new Retrofit.Builder()
-                .baseUrl(GithubService.HTTPS_API_GITHUB_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(GithubService.class);
+        this.githubService=gitHubService;
+//        githubService = new Retrofit.Builder()
+//                .baseUrl(GithubService.HTTPS_API_GITHUB_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build()
+//                .create(GithubService.class);
 
     }
 
